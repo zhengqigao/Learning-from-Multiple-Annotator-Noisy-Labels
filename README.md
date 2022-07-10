@@ -6,7 +6,7 @@ This repo contains code for our paper 'Learning from Multiple Annotator Noisy La
 ```
 @inproceedings{gao2022learning,
   title={Learning from Multiple Annotator Noisy Labels via Sample-wise Label Fusion},
-  author={Gao, Zhengqi and Sun Fan-Keng and Yang Mingran and Xiong Zikai and Engeler Marc and Burazer Antonio and Wilding Linda and Daniel Luca and S. Boning, Duane},
+  author={Gao, Zhengqi and Sun, Fan-Keng and Yang, Mingran and Xiong, Zikai and Engeler, Marc and Burazer, Antonio and Wilding, Linda and Daniel, Luca and S. Boning, Duane},
   booktitle={2022 European Conference on Computer Vision},
   year={2022}
 }

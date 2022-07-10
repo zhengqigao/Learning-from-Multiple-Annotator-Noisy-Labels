@@ -16,3 +16,6 @@ data
             | data_1.pt, label_1.pt, ...
 ```
 
+To generate data by yourself, please download the original MNIST data to this ./data folder and next run preprocess.py. Note that in preprocess.py, you actually could achieve this goal easily by taking advantage of our code: you could set ```download=True``` when calling torchvision.datasets.MNIST, and it will first download the data and then generate the experts' labels. If you want to test your own expert labeling method, please assign your way a new ```expert_type``` parameter, and update those ```if``` branches in the ```ExpertGenerator``` class of preprocess.py.
+
+ The overall running flow is shown in the ./exp/exp_overall_flow.sh file.

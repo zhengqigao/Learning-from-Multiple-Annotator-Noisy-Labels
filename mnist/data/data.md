@@ -5,27 +5,14 @@ We have provided one set of generated MNIST data in Google drive: https://drive.
 Please directly download the source data, and unzip and put it under this ./data folder. You should see a tree structure looks like:
 
 
-|-- data
-
-    |-- MNIST_expertlabels_type0
-
-        |-- train
-
-            |-- data_1.pt, label_1.pt ...
-
-        |-- test
-
-            |-- data_1.pt, label_1.pt ...
-
-        |-- val
-
-            |-- data_1.pt, label_1.pt ...
-
 ```
 data
  └─── MNIST_expertlabels_type0
         └─── train
+            | data_1.pt, label_1.pt, ...
         └─── test
+            | data_1.pt, label_1.pt, ...
         └─── val
+            | data_1.pt, label_1.pt, ...
 ```
 

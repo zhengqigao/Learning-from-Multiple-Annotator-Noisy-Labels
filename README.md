@@ -14,7 +14,7 @@ This repo contains code for our paper 'Learning from Multiple Annotator Noisy La
 
 ## Instructions
 
-
+We suggest readers first going through the code in the TwoMoon folder. It is a bare-bone implementation covering the key ideas and code snippet of our method.
 
 ## Acknowledgement
 

@@ -21,3 +21,11 @@ Please directly download the source data, and unzip and put it under this ./data
 
             |-- data_1.pt, label_1.pt ...
 
+```
+data
+ └─── MNIST_expertlabels_type0
+        └─── train
+        └─── test
+        └─── val
+```
+

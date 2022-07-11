@@ -15,7 +15,57 @@ This repo contains code for our paper 'Learning from Multiple Annotator Noisy La
 **Detailed instructions have been provided under each folder.** We suggest readers first going through the code in the TwoMoon folder. It is a bare-bone implementation covering the key ideas and code snippet of our method. After reading it, readers should be able to re-implement our method.
 
 
-Note that we haven't provided code for cifar-100 and imagenet-100, because the code are almost the same as those used in MNIST. The most notable differences are: (i) for our method, we use hyper-parameter ```num_basis=150``` in cifar-100 and imagenet-100 because they have ```K=100``` classes; (ii) We use hard majority voting (instead of soft majority voting) in cifar-100 and imagenet-100. Because when the number of classes increases, the accuracy of soft majority voting degrades.
+Note that we haven't provided code for cifar-100 and imagenet-100, because the code are nearly identical as those used in MNIST. The most notable differences are: (i) for our method, we use hyper-parameter ```num_basis=150``` in cifar-100 and imagenet-100 because they have ```K=100``` classes; (ii) We use hard majority voting (instead of soft majority voting) in cifar-100 and imagenet-100. Because when the number of classes increases, the accuracy of soft majority voting degrades. For those readers looking for an quick re-implementation of our method in 2 mins, see the following psuedo code:
+
+```
+# provided train_loader, num_experts, NumClass, num_basis, and hyper_lambda
+criterion = torch.nn.KLDivLoss()
+for i, data in enumerate(train_loader):
+            img_inputs, labels = data[0], data[1]  
+            
+            # assume expert labels start from index=1
+            img_inputs = img_inputs.to(device)
+            labels = [labels[i].to(device) for i in range(1, len(labels))] 
+            
+            outputs, coeff, weight_expert = net(img_inputs)
+            coeff = torch.softmax(coeff, dim=2)
+            weight_expert = torch.softmax(weight_expert, dim=1)
+
+            transition_expert = (coeff.reshape(-1, num_experts, num_basis, 1, 1) * matrices).sum(dim=2)
+            y_expert = torch.stack([F.one_hot(ele, NumClass) for ele in labels], dim=1).float()
+            
+            # Eq (3) in the paper
+            y_expert_star = torch.matmul(transition_expert, y_expert.reshape(-1, num_experts, NumClass, 1))
+            
+            # Eq (4) in the paper
+            y_train = (y_expert_star * weight_expert.reshape(-1, num_experts, 1, 1)).sum(dim=1).squeeze(-1)
+
+            optimizer.zero_grad()
+
+            # classification loss, corresponds to Eq (5) in the paper
+            tmp1 = criterion(F.log_softmax(outputs, dim=1), y_train)
+
+            # penalty term
+            diags = 1 - transition_expert.reshape(-1, NumClass, NumClass).diagonal(dim1=-2, dim2=-1)
+            tmp3 = torch.sum(diags * diags) / torch.numel(diags)
+
+            loss = tmp1 + hyper_lambda * tmp3
+            loss.backward()
+            optimizer.step()
+```
+
+We provide an example of dimensions for each variables here:
+
+```
+# As an example, if batch_size = 64, num_experts = 3, NumClass = 10, num_basis = 20
+# outputs: (64, 10)
+# coeff: (64, 3, 20)
+# weight_expert: (64, 3)
+# transition_expert: (64, 3, 10, 10)
+# y_expert: (64, 3, 10)
+# y_expert_star: (64, 3, 10, 1)
+# y_train: (64, 10)
+```
 
 
 ## Acknowledgement

@@ -140,7 +140,7 @@ def train_network_ours(epochs, x_train, y1_train, y2_train, x_test, y_test, net,
         transition_expert = (coeff.reshape(-1, num_experts, num_basis, 1, 1) * matrices).sum(dim=2) # (batch_size, num_experts, NumClass, NumClass)
         y_expert = torch.stack([F.one_hot(ele, NumClass) for ele in labels], dim=1).float() # (batch_size, num_experts, NumClass)
         y_expert_star = torch.matmul(transition_expert, y_expert.reshape(-1, num_experts, NumClass, 1)) # (batch_size, num_experts, NumClass, 1), Eq (3) in the paper
-        y_train = (y_expert_star * weight_expert.reshape(-1, num_experts, 1, 1)).sum(dim=1).squeeze(-1) # (batch_size, num_experts, NumClass), Eq (4) in the paper
+        y_train = (y_expert_star * weight_expert.reshape(-1, num_experts, 1, 1)).sum(dim=1).squeeze(-1) # (batch_size, NumClass), Eq (4) in the paper
 
         optimizer.zero_grad()
 

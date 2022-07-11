@@ -1,5 +1,8 @@
 
-# Running this shell file will reproduce the results we report in Table 1 of our paper
+# This shell script demonstrates the overall running flow of how we report the results shown in Table I of our paper.
+
+# [Important Note]: Running preprocess.py will (i) first load the original MNIST data, (ii) synthesize multiple experts' labels, (iii) and then save the data to the $pj_dir/data folder. However, due to the randomness of loading data in step (i), when you run this shell script, it is possible yielding completely different results from ours. In short, it is because the 'index_experts' variable defined in preprocess.py will correspond to different images in your and our case due to randomness of data loading. To this end, to justify our results, we provide one set of our generated data so that you could exactly reproduce our results. For more details, please refer to $pj_dir/data/data.md.
+
 
 cd ../
 

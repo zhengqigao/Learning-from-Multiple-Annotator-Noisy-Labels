@@ -39,32 +39,22 @@ class ExpertGenerator(object):
         # initialize parameters for generating expert labels
         if self.expert_type == 0:
             self.center_index = index_experts
-            # np.random.randint(0, N_train, (N_expert,))
-            # Generally, please use the np.random... line to setup center_index. Here we explictly assign three indices. Because if randomly generate the center_index, it sometimes leads to 98% accuracy when using only one experts' labels. In this case, testing different methods are meaningless. You could replace the elements in index_experts with any value as long as the corresponding test acc is small.
-
+            # self.center_index = np.random.randint(0, N_train, (N_expert,))
+            # Generally, please use the np.random... line to setup center_index. Here we explictly assign three indices. Because if randomly generate the center_index, it sometimes leads to 98% accuracy when using only one experts' labels. In this case, testing different methods are meaningless. You could replace the elements in index_experts with any value as long as the corresponding test acc makes sense.
             self.center_experts = [self.train_data[self.center_index[i]][0] for i in range(self.N_expert)]
-            print([self.train_data[self.center_index[i]][1] for i in range(self.N_expert)])
             self.expert_err_threshold = expert_threshold
         elif self.expert_type == 1:
-            # the class-wise hammer-spammer does not make sense. It might lead to an expert make predictions all wrong. Here we slightly modify the original hammer-spammer synthetic method.
+            # the class-wise hammer-spammer does not make sense. It might lead to an expert make predictions all wrong. Here we slightly modify the original hammer-spammer synthetic method. This is for the ablation study we show in the appendix.
             self.correct_class_num = 3
             self.class_correct_matrix = np.zeros((self.N_expert, NumClass), dtype=bool)
             for i in range(self.N_expert):
                 wrk = np.random.permutation(NumClass)
                 self.class_correct_matrix[i, wrk[:self.correct_class_num]] = True
-            print(self.class_correct_matrix)
-        elif self.expert_type == 2:
-            self.center_index = np.random.randint(0, N_train, (N_expert,))
-            # Generally, please use the np.random... line to setup center_index. Here we explictly assign three indices. Because if randomly generate the center_index, it sometimes leads to 98% accuracy when using only one experts' labels. In this case, testing different methods are meaningless. You could replace the elements in index_experts with any value as long as the corresponding test acc is small.
-
-            self.center_experts = [self.train_data[self.center_index[i]][0] for i in range(self.N_expert)]
-            print([self.train_data[self.center_index[i]][1] for i in range(self.N_expert)])
-            self.expert_err_threshold = expert_threshold
         else:
             raise ValueError("mimic_expert_type is not defined")
 
     def mimic_expert(self, input_feature, label):
-        if self.expert_type == 0 or self.expert_type == 2:
+        if self.expert_type == 0:
             expert_labels = [None for _ in range(self.N_expert)]
             for i in range(self.N_expert):
                 coeff = (torch.norm(self.center_experts[i] - input_feature, p=2) <= self.expert_err_threshold)

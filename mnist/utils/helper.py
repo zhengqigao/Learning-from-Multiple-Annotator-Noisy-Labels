@@ -18,8 +18,10 @@ def seed(seed=0):
 
 
 def generate_permutation_matrix(num_basis, dim):
-    # Return N=num_basis permutation matrices with size dim * dim
-    # return size: num_basis * dim * dim
+    # Return N=num_basis permutation matrices with size dim by dim
+    # return size: (num_basis, dim, dim)
+    # If num_basis is 1, it always return the identity matrix. This is very conveient for doing ablation study.
+    # Actually, we use dim=1 in the Cifar-100 experiment to do the ablation.
     matrices = [torch.eye(dim) for _ in range(num_basis)]
     for i, matrix in enumerate(matrices):
         if i >= 1:
@@ -42,20 +44,20 @@ def train_network_ours(epochs, loader_dict, net, device, optimizer, num_basis, n
         net.train()
         train_loss = 0.0
         for i, data in enumerate(loader_dict['train']):
-            img_inputs, labels = data[0], data[1]  # expert labels start from index=1
-            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))]
+            img_inputs, labels = data[0], data[1]  
+            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))] # expert labels start from index=1
             outputs, coeff, weight_expert = net(img_inputs)
             coeff = torch.softmax(coeff, dim=2)
             weight_expert = torch.softmax(weight_expert, dim=1)
 
-            # Some complicated matrix manipulation happens below. As an example,
-            # if batch_size = 64, num_experts = 3, NumClass = 10, num_basis = 20
-            # coeff: 64 * 3 * 20
-            # transition_expert: 64 * 3 * 10 * 10
-            # y_expert: 64 * 3 * 10
-            # y_expert_star: 64 * 3 * 10 * 1
-            # weight_expert: 64 * 3
-            # y_train: 64 * 10
+            # Some complicated matrix manipulation happens below. 
+            # As an example, if batch_size = 64, num_experts = 3, NumClass = 10, num_basis = 20
+            # coeff: (64, 3, 20)
+            # transition_expert: (64, 3, 10, 10)
+            # y_expert: (64, 3, 10)
+            # y_expert_star: (64, 3, 10, 1)
+            # weight_expert: (64, 3)
+            # y_train: (64, 10)
 
             transition_expert = (coeff.reshape(-1, num_experts, num_basis, 1, 1) * matrices).sum(dim=2)
             y_expert = torch.stack([F.one_hot(ele, NumClass) for ele in labels], dim=1).float()
@@ -66,23 +68,23 @@ def train_network_ours(epochs, loader_dict, net, device, optimizer, num_basis, n
             # begin optimization
             optimizer.zero_grad()
 
-            # classification loss
+            # classification loss, corresponds to Eq (5) in the paper
+            # [Pytorch requires: KLDivLoss needs probabilty as input, while CrossEntropyLoss needs raw logits as input]
             tmp1 = criterion(torch.nn.functional.log_softmax(outputs, dim=1), y_train)
 
-            # penalty term
+            # penalty term, note that compared to the eq (6) written in the paper, a constant term might missing (using mean or using sum).
+            # Nevertheless, since we could freely set the value of hyper-parameter lambda, this is not an issue.
+            # Moreover, since in different versions of Pytorch, the reduction 'mean' of KLDivLoss is performed differently. So in your running, it might be different from ours.
             diags = 1 - transition_expert.reshape(-1, NumClass, NumClass).diagonal(dim1=-2, dim2=-1)
-            tmp3 = torch.sum(diags * diags) / torch.numel(diags)
+            tmp3 = torch.sum(diags * diags) / torch.numel(diags) #  corresponds to Eq (6) in the paper
 
-            # print(tmp1.data, tmp2.data, tmp3.data)
-
-            # overall loss combining these three terms
             loss = tmp1 + hyper_parameter * tmp3
             loss.backward()
             optimizer.step()
             train_loss += loss.item() / len(loader_dict['train'])
 
         val_loss, val_acc = cal_loss_acc_with_aux_output(loader_dict['val'], device, net,
-                                                         use_label=0)
+                                                         use_label=0) # val acc is evaluated with golden labels
 
         test_loss, test_acc = cal_loss_acc_with_aux_output(loader_dict['test'], device, net,
                                                            use_label=0)  # test acc is evaluated with golden labels
@@ -122,8 +124,8 @@ def train_network_cvpr(epochs, loader_dict, net, device, optimizer, hyper_parame
         net.train()
         train_loss = 0.0
         for i, data in enumerate(loader_dict['train']):
-            img_inputs, labels = data[0], data[1]  # expert labels start from index=1
-            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))]
+            img_inputs, labels = data[0], data[1] 
+            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))]  # expert labels start from index=1
             outputs, matrixA_list = net(img_inputs)
             outputs = torch.softmax(outputs, dim=1)
             optimizer.zero_grad()
@@ -139,7 +141,7 @@ def train_network_cvpr(epochs, loader_dict, net, device, optimizer, hyper_parame
             train_loss += loss.item() / len(loader_dict['train'])
 
         val_loss, val_acc = cal_loss_acc_with_aux_output(loader_dict['val'], device, net,
-                                                         use_label=0)
+                                                         use_label=0) # val acc is evaluated with golden labels
 
         test_loss, test_acc = cal_loss_acc_with_aux_output(loader_dict['test'], device, net,
                                                            use_label=0)  # test acc is evaluated with golden labels
@@ -176,8 +178,8 @@ def train_network_mjv(epochs, loader_dict, net, device, optimizer, hard_or_soft=
         net.train()
         train_loss = 0.0
         for i, data in enumerate(loader_dict['train']):
-            img_inputs, labels = data[0], data[1]  # expert labels start from index=1
-            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))]
+            img_inputs, labels = data[0], data[1]  
+            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))] # expert labels start from index=1
             outputs = net(img_inputs)
             optimizer.zero_grad()
 
@@ -208,7 +210,7 @@ def train_network_mjv(epochs, loader_dict, net, device, optimizer, hard_or_soft=
             best_acc_val = val_acc
             model_best = deepcopy(net)
 
-        # please note: since in training, we are using the annotator's labels (which some of them might be wrong). So in training process, it is normal to see the train loss is decreasing, but the vali and test loss increase.
+        # please note: since in training, we are using the annotator's labels (some of them might be wrong). So in training process, it is normal to see the train loss is decreasing, but the vali and test loss increase.
 
         print(f' Epoch | All epochs: {epoch} | {epochs}')
         print(f' Train Loss: {train_loss:.3f}')
@@ -233,8 +235,8 @@ def train_network_wdn(epochs, loader_dict, net, device, weight, optimizer, optim
         net.train()
         train_loss = 0.0
         for i, data in enumerate(loader_dict['train']):
-            img_inputs, labels = data[0], data[1]  # expert labels start from index=1
-            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))]
+            img_inputs, labels = data[0], data[1]  
+            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))] # expert labels start from index=1
             output_list = net(img_inputs)
             optimizer.zero_grad()
             loss = 0
@@ -249,8 +251,8 @@ def train_network_wdn(epochs, loader_dict, net, device, weight, optimizer, optim
         net.eval()
         train_loss = 0.0
         for i, data in enumerate(loader_dict['train']):
-            img_inputs, labels = data[0], data[1]  # expert labels start from index=1
-            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))]
+            img_inputs, labels = data[0], data[1]  
+            img_inputs, labels = img_inputs.to(device), [labels[i].to(device) for i in range(1, len(labels))] # expert labels start from index=1
             output_list = net(img_inputs)
             outputs = 0
             y_train = torch.zeros((labels[0].size(0), NumClass)).to(device)
@@ -352,8 +354,8 @@ def train_network_mbem(epochs, loader_dict, net, device, optimizer, Niter, num_e
     # initialize P_matrix for each epoch
     P_matrix_list = []
     for i, data in enumerate(loader_dict['train']):
-        labels = data[1]  # expert labels start from index=1
-        labels = [labels[i].to(device) for i in range(1, len(labels))]
+        labels = data[1]  
+        labels = [labels[i].to(device) for i in range(1, len(labels))] # expert labels start from index=1
         tmp = 0
         for r in range(len(labels)):
             tmp += F.one_hot(labels[r], NumClass) / len(labels)
@@ -446,18 +448,17 @@ def train_network_mbem(epochs, loader_dict, net, device, optimizer, Niter, num_e
 
 def cal_loss_acc(loader, device, net, use_label):
     correct, v_loss, total = 0, 0, 0
+    criterion = torch.nn.CrossEntropyLoss() # fix to CE loss
     net.eval()
     with torch.no_grad():
         for i, data in enumerate(loader):
             img_inputs, labels = data[0], data[1]
             img_inputs, labels = img_inputs.to(device), labels[use_label].to(device)
-
             total += labels.size(0)
             outputs = net(img_inputs)
             _, predicted = torch.max(outputs.detach(), 1)
             correct += (predicted == labels).sum().item()
-            criterion = torch.nn.CrossEntropyLoss()
-            loss = criterion(outputs, labels)  # fix to CE loss
+            loss = criterion(outputs, labels)  
             v_loss += loss.item() / len(loader)
         val_acc = 100 * correct / total
     return v_loss, val_acc
@@ -465,6 +466,7 @@ def cal_loss_acc(loader, device, net, use_label):
 
 def cal_loss_acc_wdn(loader, device, weight, net, use_label):
     correct, v_loss, total = 0, 0, 0
+    criterion = torch.nn.CrossEntropyLoss() # fix to CE loss
     net.eval()
     with torch.no_grad():
         for i, data in enumerate(loader):
@@ -478,8 +480,7 @@ def cal_loss_acc_wdn(loader, device, weight, net, use_label):
                 pred += torch.softmax(outputs[r], dim=1) * weight[0][r]
             _, predicted = torch.max(pred.detach(), 1)
             correct += (predicted == labels).sum().item()
-            criterion = torch.nn.CrossEntropyLoss()
-            loss = criterion(pred, labels)  # fix to CE loss
+            loss = criterion(pred, labels)
             v_loss += loss.item() / len(loader)
         val_acc = 100 * correct / total
     return v_loss, val_acc
@@ -487,18 +488,17 @@ def cal_loss_acc_wdn(loader, device, weight, net, use_label):
 
 def cal_loss_acc_with_aux_output(loader, device, net, use_label):
     correct, v_loss, total = 0, 0, 0
+    criterion = torch.nn.CrossEntropyLoss() # fix to CE loss
     net.eval()
     with torch.no_grad():
         for i, data in enumerate(loader):
             img_inputs, labels = data[0], data[1]
             img_inputs, labels = img_inputs.to(device), labels[use_label].to(device)
-
             total += labels.size(0)
             outputs, *_ = net(img_inputs)
             _, predicted = torch.max(outputs.detach(), 1)
             correct += (predicted == labels).sum().item()
-            criterion = torch.nn.CrossEntropyLoss()
-            loss = criterion(outputs, labels)  # fix to CE loss
+            loss = criterion(outputs, labels)  
             v_loss += loss.item() / len(loader)
         val_acc = 100 * correct / total
     return v_loss, val_acc

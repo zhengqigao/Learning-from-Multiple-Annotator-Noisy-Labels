@@ -1,0 +1,65 @@
+ Iter | All Iter: 0 | 2
+ Train Loss: 1.959
+ Current Vali Loss | Vali Accuracy | 3.332 | 32.160
+ Current Test Loss | Test Accuracy | 3.163 | 34.890
+ Best Vali Acc | Test Acc  | 32.160 | 34.890
+----------------------------------------------------------------------
+ Iter | All Iter: 1 | 2
+ Train Loss: 1.984
+ Current Vali Loss | Vali Accuracy | 2.193 | 36.360
+ Current Test Loss | Test Accuracy | 2.123 | 39.340
+ Best Vali Acc | Test Acc  | 36.360 | 39.340
+----------------------------------------------------------------------
+Acc MBEM: 39.340000
+ Iter | All Iter: 0 | 2
+ Train Loss: 1.961
+ Current Vali Loss | Vali Accuracy | 3.238 | 33.400
+ Current Test Loss | Test Accuracy | 3.066 | 36.750
+ Best Vali Acc | Test Acc  | 33.400 | 36.750
+----------------------------------------------------------------------
+ Iter | All Iter: 1 | 2
+ Train Loss: 1.972
+ Current Vali Loss | Vali Accuracy | 2.193 | 30.640
+ Current Test Loss | Test Accuracy | 2.162 | 33.030
+ Best Vali Acc | Test Acc  | 33.400 | 36.750
+----------------------------------------------------------------------
+Acc MBEM: 36.750000
+ Iter | All Iter: 0 | 2
+ Train Loss: 1.960
+ Current Vali Loss | Vali Accuracy | 3.332 | 32.100
+ Current Test Loss | Test Accuracy | 3.132 | 35.530
+ Best Vali Acc | Test Acc  | 32.100 | 35.530
+----------------------------------------------------------------------
+ Iter | All Iter: 1 | 2
+ Train Loss: 1.931
+ Current Vali Loss | Vali Accuracy | 2.205 | 33.460
+ Current Test Loss | Test Accuracy | 2.155 | 35.790
+ Best Vali Acc | Test Acc  | 33.460 | 35.790
+----------------------------------------------------------------------
+Acc MBEM: 35.790000
+ Iter | All Iter: 0 | 2
+ Train Loss: 1.959
+ Current Vali Loss | Vali Accuracy | 3.322 | 31.820
+ Current Test Loss | Test Accuracy | 3.135 | 35.090
+ Best Vali Acc | Test Acc  | 31.820 | 35.090
+----------------------------------------------------------------------
+ Iter | All Iter: 1 | 2
+ Train Loss: 1.980
+ Current Vali Loss | Vali Accuracy | 2.304 | 29.500
+ Current Test Loss | Test Accuracy | 2.237 | 32.390
+ Best Vali Acc | Test Acc  | 31.820 | 35.090
+----------------------------------------------------------------------
+Acc MBEM: 35.090000
+ Iter | All Iter: 0 | 2
+ Train Loss: 1.959
+ Current Vali Loss | Vali Accuracy | 3.376 | 31.500
+ Current Test Loss | Test Accuracy | 3.178 | 35.020
+ Best Vali Acc | Test Acc  | 31.500 | 35.020
+----------------------------------------------------------------------
+ Iter | All Iter: 1 | 2
+ Train Loss: 1.999
+ Current Vali Loss | Vali Accuracy | 2.169 | 34.680
+ Current Test Loss | Test Accuracy | 2.107 | 36.290
+ Best Vali Acc | Test Acc  | 34.680 | 36.290
+----------------------------------------------------------------------
+Acc MBEM: 36.290000

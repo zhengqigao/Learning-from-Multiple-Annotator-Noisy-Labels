@@ -1,0 +1,155 @@
+ Epoch | All epochs: 0 | 40
+ Train Loss: 0.146
+ Current Vali Loss | Vali Accuracy | 2.135 | 29.860
+ Current Test Loss | Test Accuracy | 2.103 | 32.830
+ Best Vali Acc | Test Acc  | 29.860 | 32.830
+----------------------------------------------------------------------
+ Epoch | All epochs: 1 | 40
+ Train Loss: 0.121
+ Current Vali Loss | Vali Accuracy | 2.078 | 29.340
+ Current Test Loss | Test Accuracy | 2.036 | 32.390
+ Best Vali Acc | Test Acc  | 29.860 | 32.830
+----------------------------------------------------------------------
+ Epoch | All epochs: 2 | 40
+ Train Loss: 0.115
+ Current Vali Loss | Vali Accuracy | 2.084 | 29.140
+ Current Test Loss | Test Accuracy | 2.036 | 32.300
+ Best Vali Acc | Test Acc  | 29.860 | 32.830
+----------------------------------------------------------------------
+ Epoch | All epochs: 3 | 40
+ Train Loss: 0.113
+ Current Vali Loss | Vali Accuracy | 2.100 | 29.080
+ Current Test Loss | Test Accuracy | 2.048 | 32.280
+ Best Vali Acc | Test Acc  | 29.860 | 32.830
+----------------------------------------------------------------------
+ Epoch | All epochs: 4 | 40
+ Train Loss: 0.112
+ Current Vali Loss | Vali Accuracy | 2.106 | 28.980
+ Current Test Loss | Test Accuracy | 2.058 | 32.240
+ Best Vali Acc | Test Acc  | 29.860 | 32.830
+----------------------------------------------------------------------
+Acc wdn: 32.830000
+ Epoch | All epochs: 0 | 40
+ Train Loss: 0.146
+ Current Vali Loss | Vali Accuracy | 2.151 | 28.680
+ Current Test Loss | Test Accuracy | 2.120 | 31.400
+ Best Vali Acc | Test Acc  | 28.680 | 31.400
+----------------------------------------------------------------------
+ Epoch | All epochs: 1 | 40
+ Train Loss: 0.121
+ Current Vali Loss | Vali Accuracy | 2.101 | 28.180
+ Current Test Loss | Test Accuracy | 2.060 | 31.180
+ Best Vali Acc | Test Acc  | 28.680 | 31.400
+----------------------------------------------------------------------
+ Epoch | All epochs: 2 | 40
+ Train Loss: 0.115
+ Current Vali Loss | Vali Accuracy | 2.107 | 28.100
+ Current Test Loss | Test Accuracy | 2.062 | 31.090
+ Best Vali Acc | Test Acc  | 28.680 | 31.400
+----------------------------------------------------------------------
+ Epoch | All epochs: 3 | 40
+ Train Loss: 0.113
+ Current Vali Loss | Vali Accuracy | 2.127 | 28.120
+ Current Test Loss | Test Accuracy | 2.076 | 30.960
+ Best Vali Acc | Test Acc  | 28.680 | 31.400
+----------------------------------------------------------------------
+ Epoch | All epochs: 4 | 40
+ Train Loss: 0.112
+ Current Vali Loss | Vali Accuracy | 2.133 | 28.100
+ Current Test Loss | Test Accuracy | 2.087 | 30.860
+ Best Vali Acc | Test Acc  | 28.680 | 31.400
+----------------------------------------------------------------------
+Acc wdn: 31.400000
+ Epoch | All epochs: 0 | 40
+ Train Loss: 0.146
+ Current Vali Loss | Vali Accuracy | 2.150 | 28.860
+ Current Test Loss | Test Accuracy | 2.121 | 31.180
+ Best Vali Acc | Test Acc  | 28.860 | 31.180
+----------------------------------------------------------------------
+ Epoch | All epochs: 1 | 40
+ Train Loss: 0.121
+ Current Vali Loss | Vali Accuracy | 2.097 | 28.780
+ Current Test Loss | Test Accuracy | 2.059 | 30.990
+ Best Vali Acc | Test Acc  | 28.860 | 31.180
+----------------------------------------------------------------------
+ Epoch | All epochs: 2 | 40
+ Train Loss: 0.115
+ Current Vali Loss | Vali Accuracy | 2.103 | 28.620
+ Current Test Loss | Test Accuracy | 2.060 | 30.860
+ Best Vali Acc | Test Acc  | 28.860 | 31.180
+----------------------------------------------------------------------
+ Epoch | All epochs: 3 | 40
+ Train Loss: 0.113
+ Current Vali Loss | Vali Accuracy | 2.120 | 28.520
+ Current Test Loss | Test Accuracy | 2.073 | 30.830
+ Best Vali Acc | Test Acc  | 28.860 | 31.180
+----------------------------------------------------------------------
+ Epoch | All epochs: 4 | 40
+ Train Loss: 0.112
+ Current Vali Loss | Vali Accuracy | 2.128 | 28.500
+ Current Test Loss | Test Accuracy | 2.084 | 30.820
+ Best Vali Acc | Test Acc  | 28.860 | 31.180
+----------------------------------------------------------------------
+Acc wdn: 31.180000
+ Epoch | All epochs: 0 | 40
+ Train Loss: 0.146
+ Current Vali Loss | Vali Accuracy | 2.140 | 29.900
+ Current Test Loss | Test Accuracy | 2.107 | 32.360
+ Best Vali Acc | Test Acc  | 29.900 | 32.360
+----------------------------------------------------------------------
+ Epoch | All epochs: 1 | 40
+ Train Loss: 0.121
+ Current Vali Loss | Vali Accuracy | 2.085 | 29.460
+ Current Test Loss | Test Accuracy | 2.043 | 31.850
+ Best Vali Acc | Test Acc  | 29.900 | 32.360
+----------------------------------------------------------------------
+ Epoch | All epochs: 2 | 40
+ Train Loss: 0.115
+ Current Vali Loss | Vali Accuracy | 2.089 | 29.240
+ Current Test Loss | Test Accuracy | 2.044 | 31.720
+ Best Vali Acc | Test Acc  | 29.900 | 32.360
+----------------------------------------------------------------------
+ Epoch | All epochs: 3 | 40
+ Train Loss: 0.113
+ Current Vali Loss | Vali Accuracy | 2.105 | 29.120
+ Current Test Loss | Test Accuracy | 2.056 | 31.680
+ Best Vali Acc | Test Acc  | 29.900 | 32.360
+----------------------------------------------------------------------
+ Epoch | All epochs: 4 | 40
+ Train Loss: 0.112
+ Current Vali Loss | Vali Accuracy | 2.112 | 29.000
+ Current Test Loss | Test Accuracy | 2.067 | 31.630
+ Best Vali Acc | Test Acc  | 29.900 | 32.360
+----------------------------------------------------------------------
+Acc wdn: 32.360000
+ Epoch | All epochs: 0 | 40
+ Train Loss: 0.146
+ Current Vali Loss | Vali Accuracy | 2.139 | 29.280
+ Current Test Loss | Test Accuracy | 2.107 | 32.230
+ Best Vali Acc | Test Acc  | 29.280 | 32.230
+----------------------------------------------------------------------
+ Epoch | All epochs: 1 | 40
+ Train Loss: 0.121
+ Current Vali Loss | Vali Accuracy | 2.084 | 29.220
+ Current Test Loss | Test Accuracy | 2.040 | 31.870
+ Best Vali Acc | Test Acc  | 29.280 | 32.230
+----------------------------------------------------------------------
+ Epoch | All epochs: 2 | 40
+ Train Loss: 0.115
+ Current Vali Loss | Vali Accuracy | 2.087 | 29.140
+ Current Test Loss | Test Accuracy | 2.040 | 31.730
+ Best Vali Acc | Test Acc  | 29.280 | 32.230
+----------------------------------------------------------------------
+ Epoch | All epochs: 3 | 40
+ Train Loss: 0.113
+ Current Vali Loss | Vali Accuracy | 2.104 | 29.120
+ Current Test Loss | Test Accuracy | 2.052 | 31.630
+ Best Vali Acc | Test Acc  | 29.280 | 32.230
+----------------------------------------------------------------------
+ Epoch | All epochs: 4 | 40
+ Train Loss: 0.112
+ Current Vali Loss | Vali Accuracy | 2.110 | 29.100
+ Current Test Loss | Test Accuracy | 2.063 | 31.600
+ Best Vali Acc | Test Acc  | 29.280 | 32.230
+----------------------------------------------------------------------
+Acc wdn: 32.230000

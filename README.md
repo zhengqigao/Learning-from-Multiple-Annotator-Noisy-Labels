@@ -1,4 +1,4 @@
-# Learning from Multiple Annotator Noisy Labels (ECCV 2022)
+# Learning from Multi-Annotator Noisy Labels (ECCV 2022)
 
 This repo contains code for our paper 'Learning from Multiple Annotator Noisy Labels via Sample-wise Label Fusion' published on ECCV 2022. If you find it useful, please cite our paper. More info about the first author could be found on his homepage: https://zhengqigao.github.io/.
 

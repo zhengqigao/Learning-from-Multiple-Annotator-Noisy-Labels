@@ -8,8 +8,10 @@ import matplotlib.pyplot as plt
 import argparse
 
 Nmax_train = 60000
-index_experts = [11, 103, 364]
 NumClass = 10
+
+ # Please feel free to change this index list. If you have num_experts = 3, then the length of this list should be 3. This list represents the 'weakness' image for each expert.
+index_experts = [11, 103, 364]
 
 class ExpertGenerator(object):
     def __init__(self, store_data_root_path, N_train, expert_type, N_expert, expert_threshold):
@@ -40,7 +42,7 @@ class ExpertGenerator(object):
         if self.expert_type == 0:
             self.center_index = index_experts
             # self.center_index = np.random.randint(0, N_train, (N_expert,))
-            # Generally, please use the np.random... line to setup center_index. Here we explictly assign three indices. Because if randomly generate the center_index, it sometimes leads to 98% accuracy when using only one experts' labels. In this case, testing different methods are meaningless. You could replace the elements in index_experts with any value as long as the corresponding test acc makes sense.
+            # Generally, please use the np.random... line to setup center_index. Here we explictly assign three indices using index_experts. Because if randomly generate the center_index, it sometimes leads to 98% accuracy when using only one experts' labels. You could replace the elements in index_experts with any value as long as the corresponding test acc makes sense.
             self.center_experts = [self.train_data[self.center_index[i]][0] for i in range(self.N_expert)]
             self.expert_err_threshold = expert_threshold
         elif self.expert_type == 1:

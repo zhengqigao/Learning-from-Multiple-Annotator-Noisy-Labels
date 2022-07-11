@@ -42,14 +42,14 @@ for i, data in enumerate(train_loader):
 
             optimizer.zero_grad()
 
-            # classification loss, corresponds to Eq (5) in the paper
+            # classification loss, Eq (5) in the paper
             tmp1 = criterion(F.log_softmax(outputs, dim=1), y_train)
 
-            # penalty term
+            # penalty term,  Eq (6) in the paper
             diags = 1 - transition_expert.reshape(-1, NumClass, NumClass).diagonal(dim1=-2, dim2=-1)
-            tmp3 = torch.sum(diags * diags) / torch.numel(diags)
+            tmp2 = torch.sum(diags * diags) / torch.numel(diags)
+            loss = tmp1 + hyper_lambda * tmp2
 
-            loss = tmp1 + hyper_lambda * tmp3
             loss.backward()
             optimizer.step()
 ```
@@ -67,6 +67,11 @@ We provide an example of dimensions for each variables here:
 # y_train: (64, 10)
 ```
 
+## Important Notes
+
+The environment requirement is described in ```env.yaml```. Two important things are worthy to be mentioned. First, in different versions of Pytorch, the reduction 'mean' of torch.nn.KLDivLoss is performed differently: KLDivLoss divides the total loss by both the batch size and the support size, or only the batch size. Since we use torch.nn.KLDivLoss to calculate the first term of our Eq (6), this causes a problem: our choice of hyper-parameter ```lambda``` might not be the optimal choice in your environment.
+
+Secondly, due to the randomness of loading data, when you run preprocess.py in the MNIST example, it is possible yielding completely different results from ours. In short, it is because the ```index_experts``` variable defined in preprocess.py will correspond to different images in your and our cases due to randomness of data loading. Considering this situation, to justify our results, we have provided one set of our generated data so that you could exactly reproduce our results. 
 
 ## Acknowledgement
 
